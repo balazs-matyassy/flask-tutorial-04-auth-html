@@ -1,0 +1,48 @@
+body {
+    background-color: lightblue;
+    color: #404040;
+}
+
+a:link, a:active, a:visited, a:hover {
+    color: darkblue;
+    text-decoration: none;
+}
+
+.list {
+    width: 100%;
+}
+
+.link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: darkblue;
+    font: inherit;
+    cursor: pointer;
+}
+
+#container {
+    margin: auto;
+    padding: 5px;
+    width: 800px;
+    border: 1px solid grey;
+    background-color: white;
+}
+
+#logo {
+    text-align: center;
+}
+
+#search {
+    text-align: right;
+    padding: 5px;
+}
+
+#menu ul {
+    list-style-type: none;
+}
+
+#menu ul li {
+    display: inline-block;
+    padding: 5px;
+}

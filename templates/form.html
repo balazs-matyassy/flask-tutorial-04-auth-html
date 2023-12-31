@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <h2>{{ 'Edit' if recipe.recipe_id else 'Create' }} recipe</h2>
+
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post">
+        <table>
+            <tbody>
+            <tr>
+                <th><label for="category">Category</label></th>
+                <td><input name="category" type="text" id="category" value="{{ recipe.category }}" required></td>
+            </tr>
+            <tr>
+                <th><label for="name">Name</label></th>
+                <td><input name="name" type="text" id="name" value="{{ recipe.name }}" required></td>
+            </tr>
+            <tr>
+                <th><label for="description">Description</label></th>
+                <td><textarea name="description" id="description">{{ recipe.description }}</textarea></td>
+            </tr>
+            <tr>
+                <th><label for="difficulty">Difficulty</label></th>
+                <td>
+                    <select name="difficulty" id="difficulty" required>
+                        <option value="1"{{ 'selected' if recipe.difficulty == 1 else '' }}>
+                            ★☆☆☆☆ (Very easy)
+                        </option>
+                        <option value="2"{{ 'selected' if recipe.difficulty == 2 else '' }}>
+                            ★★☆☆☆ (Easy)
+                        </option>
+                        <option value="3"{{ 'selected' if recipe.difficulty == 3 else '' }}>
+                            ★★★☆☆ (Medium)
+                        </option>
+                        <option value="4"{{ 'selected' if recipe.difficulty == 4 else '' }}>
+                            ★★★★☆ (Difficult)
+                        </option>
+                        <option value="5"{{ 'selected' if recipe.difficulty == 5 else '' }}>
+                            ★★★★★ (Very difficult)
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {% if recipe.recipe_id %}
+                        <button type="submit" onclick="return confirm('Save recipe?')">
+                            Save
+                        </button>
+                    {% else %}
+                        <button type="submit" onclick="return confirm('Create recipe?')">
+                            Create
+                        </button>
+                    {% endif %}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <p>
+        <a href="{{ url_for('list_all') }}">Back</a>
+    </p>
+{% endblock %}

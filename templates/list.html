@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block search %}
+    <form>
+        <div>
+            <input name="search" type="text" id="search" value="{{ request.args.get('search', '') }}">
+            <label for="search"><button type="submit">Search</button></label>
+        </div>
+    </form>
+{% endblock %}
+
+{% block main %}
+    <h1>Recipes</h1>
+
+    <table class="list">
+        <thead>
+        <tr>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Difficulty</th>
+            {% if is_fully_authenticated() %}
+                <th colspan="3"></th>
+            {% else %}
+                <th></th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for recipe in recipes %}
+            <tr>
+                <td>{{ recipe.category }}</td>
+                <td>{{ recipe.name }}</td>
+                <td>
+                    {{ '★' * recipe.difficulty }}{{ '☆' * (5 - recipe.difficulty) }}
+                    ({{ recipe.difficulty_description }})
+                </td>
+                <td>
+                    <a href="{{ url_for('view', recipe_id=recipe.recipe_id) }}">
+                        View
+                    </a>
+                </td>
+                {% if is_fully_authenticated() %}
+                    <td>
+                        <a href="{{ url_for('edit', recipe_id=recipe.recipe_id) }}">
+                            Edit
+                        </a>
+                    </td>
+                    <td>
+                        <form method="post" action="{{ url_for('delete', recipe_id=recipe.recipe_id) }}">
+                            <button type="submit" class="link" onclick="return confirm('Delete recipe?')">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <p><a href="{{ url_for('create') }}">Create recipe</a></p>
+{% endblock %}

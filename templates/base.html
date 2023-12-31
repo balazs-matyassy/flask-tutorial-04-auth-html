@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask Cookbook</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cookbook.css') }}">
+</head>
+<body>
+
+<table id="container">
+    <tr>
+        <td colspan="2" id="logo">
+            <img src="{{ url_for('static', filename='img/pizza.jpg') }}" alt="pizza">
+            <h1>Flask Cookbook</h1>
+            <hr>
+        </td>
+    </tr>
+    <tr>
+        <td id="menu">
+            <ul>
+                <li><a href="{{ url_for('list_all') }}">Recipes</a></li>
+                {% if not is_fully_authenticated() %}
+                    <li>
+                        <a href="{{ url_for('login') }}">
+                            Login
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ url_for('logout') }}">
+                            Logout [{{ g.username }}]
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </td>
+        <td id="search">
+            {% block search %}{% endblock %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" id="main">
+            <hr>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <h3>{{ message }}</h3>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% block main %}{% endblock %}
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
